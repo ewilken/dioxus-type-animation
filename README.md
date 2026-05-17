@@ -19,34 +19,6 @@ dioxus = "0.7"
 dioxus-type-animation = "0.1"
 ```
 
-## Runnable examples
-
-The repository includes standalone Cargo examples under `examples/`:
-
-- `examples/basic.rs`
-- `examples/sequence_items.rs`
-- `examples/repeat.rs`
-- `examples/speed.rs`
-- `examples/omit_deletion_animation.rs`
-- `examples/wrapper.rs`
-- `examples/no_cursor.rs`
-- `examples/pre_render_first_string.rs`
-- `examples/accessibility.rs`
-- `examples/custom_splitter.rs`
-- `examples/all_features.rs`
-
-Run one with Cargo:
-
-```dioxus-type-animation/README.md#L39-40
-cargo run --example basic
-```
-
-Or check all examples compile:
-
-```dioxus-type-animation/README.md#L44-45
-cargo check --examples
-```
-
 ## Usage
 
 ### Basic usage
