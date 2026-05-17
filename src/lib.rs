@@ -246,6 +246,232 @@ impl PartialEq for TypeAnimationProps {
 }
 
 /// Dioxus typewriter animation component inspired by `react-type-animation`.
+///
+/// # Basic usage
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{Repeat, SequenceElement, Speed, TypeAnimation, Wrapper};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![
+///                 SequenceElement::from("We produce food for Mice"),
+///                 SequenceElement::from(1000_u64),
+///                 SequenceElement::from("We produce food for Hamsters"),
+///                 SequenceElement::from(1000_u64),
+///                 SequenceElement::from("We produce food for Guinea Pigs"),
+///                 SequenceElement::from(1000_u64),
+///                 SequenceElement::from("We produce food for Chinchillas"),
+///                 SequenceElement::from(1000_u64),
+///             ],
+///             wrapper: Wrapper::Span,
+///             speed: Speed::Preset(50),
+///             style: Some("font-size: 2em; display: inline-block;".to_string()),
+///             repeat: Repeat::Infinite,
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Sequence items
+///
+/// The `sequence` prop accepts text transitions, delays in milliseconds, and
+/// callbacks.
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{SequenceElement, TypeAnimation};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![
+///                 SequenceElement::from("Typing..."),
+///                 SequenceElement::from(750_u64),
+///                 SequenceElement::from(|| println!("Done typing")),
+///                 SequenceElement::from("Finished."),
+///             ],
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Repeat behavior
+///
+/// `Repeat::Count(n)` runs the animation once plus `n` repeats. Use
+/// `Repeat::Infinite` to loop forever.
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{Repeat, SequenceElement, TypeAnimation};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![
+///                 SequenceElement::from("Loop me"),
+///                 SequenceElement::from(1000_u64),
+///             ],
+///             repeat: Repeat::Count(3),
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Speed options
+///
+/// `Speed::Preset(value)` mirrors the React library's numeric `speed` prop and
+/// normalizes to `abs(value - 100)` milliseconds per keystroke. Use
+/// `Speed::KeyStrokeDelayInMs(value)` for a direct base delay in milliseconds.
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{SequenceElement, Speed, TypeAnimation};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![
+///                 SequenceElement::from("Type quickly"),
+///                 SequenceElement::from(500_u64),
+///                 SequenceElement::from("Delete slowly"),
+///             ],
+///             speed: Speed::Preset(80),
+///             deletion_speed: Some(Speed::KeyStrokeDelayInMs(120)),
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Omit deletion animation
+///
+/// Set `omit_deletion_animation` to skip animated deletion steps and only
+/// animate newly written text.
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{SequenceElement, TypeAnimation};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![
+///                 SequenceElement::from("Dioxus is fun"),
+///                 SequenceElement::from(1000_u64),
+///                 SequenceElement::from("Dioxus is fast"),
+///             ],
+///             omit_deletion_animation: true,
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Wrapper elements
+///
+/// The default wrapper is [`Wrapper::Span`]. You can choose from `p`, `div`,
+/// `span`, `strong`, `a`, `h1`-`h6`, and `b` via [`Wrapper`].
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{SequenceElement, TypeAnimation, Wrapper};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             wrapper: Wrapper::H1,
+///             sequence: vec![SequenceElement::from("Animated heading")],
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Cursor styling
+///
+/// The blinking cursor is enabled by default. Disable it with `cursor: false`.
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{SequenceElement, TypeAnimation};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![SequenceElement::from("No cursor")],
+///             cursor: false,
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Pre-render the first string
+///
+/// Set `pre_render_first_string` to render the first string immediately before
+/// animation starts.
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{SequenceElement, TypeAnimation};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![
+///                 SequenceElement::from("Already visible"),
+///                 SequenceElement::from(1000_u64),
+///                 SequenceElement::from("Then animated"),
+///             ],
+///             pre_render_first_string: true,
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Accessibility attributes
+///
+/// You can pass `aria_label`, `aria_hidden`, and `role`. When `aria_label` is
+/// set, the animated visual text is rendered inside an inner
+/// `aria-hidden="true"` span.
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{SequenceElement, TypeAnimation};
+///
+/// fn App() -> Element {
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![SequenceElement::from("Fast-changing animated text")],
+///             aria_label: Some("Animated product tagline".to_string()),
+///             role: Some("text".to_string()),
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Custom splitter
+///
+/// The default splitter uses `text.chars()`. Provide a custom [`StringSplitter`]
+/// for grapheme-aware animation or other splitting behavior.
+///
+/// ```rust,no_run
+/// use dioxus::prelude::*;
+/// use dioxus_type_animation::{SequenceElement, StringSplitter, TypeAnimation};
+/// use std::rc::Rc;
+///
+/// fn App() -> Element {
+///     let splitter: StringSplitter = Rc::new(|text: &str| {
+///         text.chars().map(|char| char.to_string()).collect()
+///     });
+///
+///     rsx! {
+///         TypeAnimation {
+///             sequence: vec![SequenceElement::from("👨‍👩‍👧‍👦 family")],
+///             splitter: Some(splitter),
+///         }
+///     }
+/// }
+/// ```
 pub fn TypeAnimation(props: TypeAnimationProps) -> Element {
     let initial_text = if props.pre_render_first_string {
         first_string(&props.sequence).unwrap_or_default()
