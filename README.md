@@ -1,5 +1,6 @@
 # dioxus-type-animation
 
+[![CI](https://github.com/ewilken/dioxus-type-animation/workflows/CI/badge.svg)](https://github.com/ewilken/dioxus-type-animation/actions?query=workflow%3ACI)
 [![crates.io](https://img.shields.io/crates/v/dioxus-type-animation.svg)](https://crates.io/crates/dioxus-type-animation)
 [![docs.rs](https://docs.rs/dioxus-type-animation/badge.svg)](https://docs.rs/dioxus-type-animation)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ewilken/dioxus-type-animation/blob/main/LICENSE)
