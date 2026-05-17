@@ -1,0 +1,16 @@
+[package]
+name = "dioxus-type-animation"
+version = "0.1.0"
+authors = ["Elias Wilken <elias@ferra.io>"]
+edition = "2024"
+description = "A Dioxus typewriter animation component inspired by react-type-animation."
+documentation = "https://docs.rs/dioxus-type-animation"
+readme = "README.md"
+repository = "https://github.com/ewilken/dioxus-type-animation"
+license = "MIT"
+keywords = ["dioxus", "typewriter", "animation"]
+
+[dependencies]
+dioxus = "0.7"
+fastrand = "2"
+gloo-timers = { version = "0.4", features = ["futures"] }
