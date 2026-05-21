@@ -27,6 +27,7 @@ dioxus-type-animation = "0.1"
 use dioxus::prelude::*;
 use dioxus_type_animation::{Repeat, SequenceElement, Speed, TypeAnimation, Wrapper};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -61,6 +62,7 @@ The `sequence` prop accepts three kinds of items:
 use dioxus::prelude::*;
 use dioxus_type_animation::{SequenceElement, TypeAnimation};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -83,6 +85,7 @@ By default, a sequence runs once. `Repeat::Count(n)` means the animation runs on
 use dioxus::prelude::*;
 use dioxus_type_animation::{Repeat, SequenceElement, TypeAnimation};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -103,6 +106,7 @@ Use `Speed::KeyStrokeDelayInMs(value)` for an exact base keystroke delay in mill
 use dioxus::prelude::*;
 use dioxus_type_animation::{SequenceElement, Speed, TypeAnimation};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -126,6 +130,7 @@ Set `omit_deletion_animation` to `true` to jump directly to the deletion end-sta
 use dioxus::prelude::*;
 use dioxus_type_animation::{SequenceElement, TypeAnimation};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -148,6 +153,7 @@ The default wrapper is `Wrapper::Span`. You can choose from `p`, `div`, `span`, 
 use dioxus::prelude::*;
 use dioxus_type_animation::{SequenceElement, TypeAnimation, Wrapper};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -181,6 +187,7 @@ Disable it with `cursor: false`:
 use dioxus::prelude::*;
 use dioxus_type_animation::{SequenceElement, TypeAnimation};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -199,6 +206,7 @@ Set `pre_render_first_string` to `true` to render the first string immediately b
 use dioxus::prelude::*;
 use dioxus_type_animation::{SequenceElement, TypeAnimation};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -221,6 +229,7 @@ You can pass `aria_label`, `aria_hidden`, and `role`. When `aria_label` is set, 
 use dioxus::prelude::*;
 use dioxus_type_animation::{SequenceElement, TypeAnimation};
 
+#[component]
 fn App() -> Element {
     rsx! {
         TypeAnimation {
@@ -241,6 +250,7 @@ use dioxus::prelude::*;
 use dioxus_type_animation::{SequenceElement, StringSplitter, TypeAnimation};
 use std::rc::Rc;
 
+#[component]
 fn App() -> Element {
     let splitter: StringSplitter = Rc::new(|text: &str| {
         // Replace this with unicode-segmentation or another grapheme splitter
